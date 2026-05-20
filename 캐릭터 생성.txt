@@ -1,0 +1,34 @@
+```mermaid
+
+sequenceDiagram
+    autonumber
+    actor Player as 플레이어
+    participant UI as Create_Character_UI
+    participant Battle as 전투
+    participant Pl as 플레이어(Entity)
+    participant Ch as 캐릭터
+
+    Player->>+UI: 캐릭터 생성 요청(플레이어id, 캐릭터명, 직업, 레벨)
+    UI->>+Battle: 캐릭터생성(플레이어id, 캐릭터명, 직업, 레벨)
+    
+    %% 플레이어 체크 (Include 관계)
+    Battle->>+Pl: 플레이어체크(플레이어id)
+    Note over Pl: 플레이어id == "hero" 검증
+    Pl-->>-Battle: 검증 결과 (true/false)
+    
+    alt 플레이어체크 성공 (true)
+        alt 직업 == "전사"
+            Battle->>+Ch: 전사 객체 생성 및 능력치 설정
+            Note over Ch: hp = 레벨 * 100<br/>공격력 = 레벨 * 15<br/>공격속성 = "물리공격"
+            Ch-->>-Battle: 전사 캐릭터 객체 반환
+        else 직업 == "마법사"
+            Battle->>+Ch: 마법사 객체 생성 및 능력치 설정
+            Note over Ch: hp = 레벨 * 60<br/>공격력 = 레벨 * 25<br/>공격속성 = "마법공격"
+            Ch-->>-Battle: 마법사 캐릭터 객체 반환
+        end
+        Battle-->>UI: 캐릭터 생성 완료 (캐릭터 객체)
+        UI-->>Player: 캐릭터 생성 성공 메시지 표시
+    else 플레이어체크 실패 (false)
+        Battle-->>UI: 생성 실패 (권한 없음)
+        UI-->>-Player: "올바르지 않은 플레이어 ID입니다."
+    end
