@@ -33,10 +33,8 @@ classDiagram
     }
 
     class 전투 {
-        <<control>>
         +캐릭터생성(플레이어id : String, 캐릭터명 : String, 직업 : String, 레벨 : int)  캐릭터
         +몬스터공격(플레이어id : String, 공격자 : 캐릭터) String
-        -등급부여(대미지 : float)  String
     }
 
     %% Relationships
@@ -46,7 +44,7 @@ classDiagram
     Create_Character_UI ..> 전투 : 캐릭터 생성 요청
     Attack_Monster_UI ..> 전투 : 몬스터 공격 요청
     
-    전투 ..> 플레이어 : <<include>> UC3 실체화
+    전투 ..> 플레이어 : 플레이어체크 수행
     전투 ..> 캐릭터 : 생성 및 조작
 
     
