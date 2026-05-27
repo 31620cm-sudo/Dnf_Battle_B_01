@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="game.전투, game.캐릭터" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -13,124 +13,120 @@
         --primary: #58a6ff;
         --success: #2ea44f;
         --error: #da3633;
-        --neon-glow: 0 0 15px rgba(88, 166, 255, 0.5);
     }
     body { 
-        background-color: var(--bg-color); 
-        color: var(--text-color);
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-        margin: 0; padding: 40px;
+        background-color: var(--bg-color); color: var(--text-color);
+        font-family: 'Segoe UI', sans-serif; margin: 0; padding: 40px;
         display: flex; flex-direction: column; align-items: center;
     }
-    h2 { color: #fff; font-size: 28px; text-shadow: 0 0 10px rgba(255,255,255,0.2); margin-bottom: 30px; }
-    .card { 
+    h2 { color: #fff; font-size: 26px; margin-bottom: 20px; }
+    .card {
         background: var(--card-bg); border: 1px solid #30363d; 
-        padding: 30px; border-radius: 12px; width: 450px; 
-        box-shadow: 0 8px 24px rgba(0,0,0,0.5); transition: all 0.3s ease;
+        padding: 30px; border-radius: 12px; width: 450px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.5);
     }
-    .card:hover { border-color: var(--primary); box-shadow: var(--neon-glow); }
-    .form-group { margin-bottom: 20px; }
-    label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #8b949e; }
-    input, select { 
-        background: #0d1117; border: 1px solid #30363d; color: #fff;
-        padding: 12px; width: 100%; box-sizing: border-box; border-radius: 6px;
-        font-size: 15px; transition: border 0.2s;
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-size: 14px; margin-bottom: 5px; color: #8b949e; }
+    .form-group input, .form-group select {
+        width: 100%; padding: 10px; background: #0d1117; border: 1px solid #30363d;
+        color: #fff; border-radius: 6px; box-sizing: border-box;
     }
-    input:focus, select:focus { border-color: var(--primary); outline: none; }
-    .btn-submit { 
-        width: 100%; padding: 14px; background: var(--primary); color: #fff; 
-        border: none; border-radius: 6px; font-size: 16px; font-weight: bold; 
-        cursor: pointer; transition: background 0.2s; margin-top: 10px;
+    .btn-submit {
+        width: 100%; padding: 12px; background: var(--success); color: #fff;
+        border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 16px;
     }
-    .btn-submit:hover { background: #1f6feb; }
-    
-    /* 결과 템플릿 */
-    .result-box { 
-        margin-top: 30px; padding: 25px; border-radius: 12px; width: 450px; box-sizing: border-box;
-        animation: fadeIn 0.5s ease-out;
+    .btn-submit:hover { filter: brightness(1.1); }
+    .result-box {
+        margin-top: 20px; background: #1f242c; border: 1px solid var(--primary);
+        padding: 20px; border-radius: 8px;
     }
-    .success-box { background: rgba(46, 164, 79, 0.15); border: 1px solid var(--success); }
-    .error-box { background: rgba(218, 54, 51, 0.15); border: 1px solid var(--error); }
-    .stat-row { display: flex; justify-content: space-between; margin: 10px 0; font-size: 15px; }
+    .stat-row { display: flex; justify-content: space-between; margin: 8px 0; font-size: 14px; }
     .stat-label { color: #8b949e; }
     .stat-value { color: #fff; font-weight: bold; }
     .btn-next {
-        display: block; text-align: center; width: 100%; box-sizing: border-box;
-        padding: 12px; background: var(--success); color: #fff; text-decoration: none;
-        border-radius: 6px; font-weight: bold; margin-top: 20px; transition: opacity 0.2s;
+        display: block; text-align: center; margin-top: 15px; padding: 10px;
+        background: var(--primary); color: #fff; text-decoration: none; border-radius: 6px; font-weight: bold;
     }
-    .btn-next:hover { opacity: 0.9; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .error-box {
+        margin-top: 20px; background: rgba(218,54,51,0.1); border: 1px solid var(--error);
+        padding: 15px; border-radius: 8px; color: #ff7b72; font-size: 14px;
+    }
 </style>
 </head>
 <body>
 
-<h2>⚔️ HERO RPG : 캐릭터 생성 ⚔️</h2>
+<h2>🎮 CHARACTER CREATION LOUNGE</h2>
 
 <div class="card">
     <form method="post" action="createCharacter.jsp">
         <div class="form-group">
-            <label>플레이어 검증 ID</label>
-            <input type="text" name="playerId" value="hero" placeholder="ID를 입력하세요" required>
+            <label>플레이어 검증 ID (요구사항: "hero")</label>
+            <input type="text" name="playerId" value="hero" required>
         </div>
         <div class="form-group">
-            <label>캐릭터 이름</label>
-            <input type="text" name="charName" value="네오 크루세이더" required>
+            <label>캐릭터명</label>
+            <input type="text" name="characterName" placeholder="원하는 닉네임을 입력하세요" required>
         </div>
         <div class="form-group">
-            <label>클래스(직업)</label>
+            <label>직업 선택</label>
             <select name="job">
-                <option value="전사">전사 (Warrior)</option>
-                <option value="마법사">마법사 (Mage)</option>
+                <option value="전사">전사 (물리공격)</option>
+                <option value="마법사">마법사 (마법공격)</option>
             </select>
         </div>
         <div class="form-group">
             <label>초기 설정 레벨</label>
-            <input type="number" name="level" value="15" min="1" max="99" required>
+            <input type="number" name="level" value="1" min="1" max="100" required>
         </div>
-        <button type="submit" class="btn-submit">새로운 모험 시작하기</button>
+        <button type="submit" class="btn-submit">✨ 캐릭터 생성 및 전장 진입</button>
     </form>
-</div>
 
 <%
+    // POST 요청 처리 (비즈니스 로직 연산)
     if ("POST".equalsIgnoreCase(request.getMethod())) {
         request.setCharacterEncoding("UTF-8");
+        
         String playerId = request.getParameter("playerId");
-        String charName = request.getParameter("charName");
+        String characterName = request.getParameter("characterName");
         String job = request.getParameter("job");
         int level = Integer.parseInt(request.getParameter("level"));
 
         전투 battleControl = new 전투();
-        캐릭터 신규캐릭터 = battleControl.캐릭터생성(playerId, charName, job, level);
+        // 플레이어 체크('hero') 후 직업별 상속 객체(전사/마법사) 동적 생성
+        캐릭터 신규캐릭터 = battleControl.캐릭터생성(playerId, characterName, job, level);
 
         if (신규캐릭터 != null) {
+            // 핵심 학습포인트: 세션에 생성된 캐릭터 객체와 정보를 바인딩하여 공유
             session.setAttribute("myCharacter", 신규캐릭터);
             session.setAttribute("playerId", playerId);
             session.setAttribute("jobName", job);
 %>
-            <div class="result-box success-box">
-                <h3 style="color: #56d364; margin-top:0;">고유 캐릭터 생성 성공!</h3>
-                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 15px 0;">
+            <div class="result-box">
+                <h3 style="color: #56d364; margin-top:0; font-size: 16px;">고유 캐릭터 생성 성공!</h3>
+                <div style="font-size:12px; color:#8b949e; margin-bottom:10px;">인벤토리 내부 구조 자동 활성화 (Composition)</div>
+                <hr style="border:0; border-top:1px solid #30363d; margin:10px 0;">
+                
                 <div class="stat-row"><span class="stat-label">이름</span><span class="stat-value"><%= 신규캐릭터.get캐릭터명() %></span></div>
                 <div class="stat-row"><span class="stat-label">직업</span><span class="stat-value" style="color:#ffa657;"><%= job %></span></div>
                 <div class="stat-row"><span class="stat-label">레벨</span><span class="stat-value" style="color:var(--primary);"><%= 신규캐릭터.get레벨() %> Lv</span></div>
                 <div class="stat-row"><span class="stat-label">생명력 (HP)</span><span class="stat-value" style="color:#ff7b72;"><%= 신규캐릭터.getHp() %></span></div>
                 <div class="stat-row"><span class="stat-label">기본 공격력</span><span class="stat-value" style="color:#d2a8ff;"><%= 신규캐릭터.get공격력() %> (<%= 신규캐릭터.get공격속성() %>)</span></div>
+                <div class="stat-row"><span class="stat-label">기본 가방칸</span><span class="stat-value" style="color:#79c0ff;"><%= 신규캐릭터.get인벤토리멤버().get최대용량() %>칸 (Empty)</span></div>
                 
-                <a href="attackMonster.jsp" class="btn-next">몬스터 사냥터로 진입 ➔</a>
+                <a href="attackMonster.jsp" class="btn-next">사냥터 및 시스템 검증 스테이지 이동 ➔</a>
             </div>
 <%
         } else {
 %>
-            <div class="result-box error-box">
-                <h3 style="color: #ff7b72; margin-top:0;">시스템 가동 실패</h3>
-                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 15px 0;">
-                <p style="margin:0; font-size:14px;">보안 검증 오류: 올바르지 않은 플레이어 ID입니다. 권한을 확인하세요.</p>
+            <div class="error-box">
+                <h4 style="margin: 0 0 5px 0;">⚠️ 캐릭터 생성 실패</h4>
+                <p style="margin: 0;">플레이어 체크에 실패했습니다. 유효한 플레이어 ID("hero")를 입력해 주십시오.</p>
             </div>
 <%
         }
     }
 %>
+</div>
 
 </body>
 </html>
